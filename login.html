@@ -8,30 +8,24 @@
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" /> -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
-   
+
     <!-- ================== SWEET ALERT================== -->
     <!-- ================================================ -->
     <link href="
 https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
-<style>
-	@keyframes loader-rotate {
-		0% {
-			transform: rotate(0);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-	.loader {
-		border-right-color: transparent;
-		animation: loader-rotate 1s linear infinite;
-	}
-</style>
 </head>
 <link rel="stylesheet" href="./main.css">
-<body>
-    <div class="w-12 h-12 border-8 border-pink-600 rounded-full loader"></div>
 
+<body>
+    <!-- ========================================================== -->
+    <!-- ========================== LOADER ======================== -->
+    <!-- ========================================================== -->
+    <div id="loader" class="hidden">
+        <div class="animate-spin fixed left-[50%] top-[45%] inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-pink-600 rounded-full"
+            role="status" aria-label="loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <!-- ======================================================================== -->
     <!-- ================================ login  page ============================ -->
     <!-- ======================================================================== -->

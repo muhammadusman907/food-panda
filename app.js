@@ -14,7 +14,8 @@ let signupPassword = document.getElementById("signup-password");
 let signupBtn = document.getElementById("signup-btn");
 let signupUserName = document.getElementById("signup-user-name");
 let profileImage = document.getElementById("profile-image");
-
+let loader = document.getElementById("loader");
+// loader.style.display = "block";
 // ================================
 // 2: click sign up btn create user
 
@@ -32,7 +33,7 @@ signupBtn && signupBtn.addEventListener("click", () => {
         alert("empty name")
     }
     else {
-
+        loader.style.display = "block";
         createUserWithEmailAndPassword(auth, signupEmail.value, signupPassword.value)
             .then(async (userCredential) => {
                 // ====================
@@ -45,6 +46,8 @@ signupBtn && signupBtn.addEventListener("click", () => {
                     user_email: signupEmail.value,
                     user_name: signupUserName.value
                 });
+                alert("registered successfully")
+                loader.style.display = "none";
 
             })
             .catch((error) => {
@@ -82,12 +85,15 @@ loginBtn && loginBtn.addEventListener("click", () => {
         alert("empty password")
     }
     else {
+        loader.style.display = "block";
         signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
             .then((userCredential) => {
                 // Signed in user 
 
                 const user = userCredential.user;
                 console.log("login check user --->", user)
+                alert("login successfully")
+                loader.style.display = "none";
                 location.href = "./profile.html"
             })
             .catch((error) => {
@@ -110,6 +116,7 @@ let profileEmail = document.getElementById("profile-email");
 onAuthStateChanged(auth, async (user) => {
     // =============================
     if (user) {
+        loader.style.display = "block";
         const docRef = doc(db, "userData", auth.currentUser.uid);
         const docSnap = await getDoc(docRef);
         //  ========================
@@ -126,6 +133,8 @@ onAuthStateChanged(auth, async (user) => {
             if (docSnap.data().photoUrl) {
                 profileImage.src = docSnap.data().photoUrl;
             }
+            loader.style.display = "none";
+
             console.log("Current data------>: ", docSnap.data());
         } else {
             // docSnap.data() will be undefined in this case
@@ -152,9 +161,13 @@ let logOutBtn = document.getElementById("logout-btn");
 logOutBtn && logOutBtn.addEventListener("click", () => {
     signOut(auth).then(() => {
         // Sign-out successful.
+        loader.style.display = "block";
+
         alert("logout successfully")
+        loader.style.display = "none";
+
         location.href = "./login.html"
-        
+
     }).catch((error) => {
         alert(error)
         // An error happened.
@@ -209,17 +222,23 @@ let profileImageFunction = (file) => {
 // =============================================
 let updateProfileBtn = document.getElementById("update-profile-btn");
 updateProfileBtn && updateProfileBtn.addEventListener("click", async () => {
-    try {
-        let photoUrl = await profileImageFunction(profileImageFile.files[0]);
-        const UserImageRef = doc(db, "userData", auth.currentUser.uid);
-        await updateDoc(UserImageRef, {
-            photoUrl
-        });
-        alert("profile updated")
-        console.log(photoUrl);
-        console.log(profileEmail.value, profileUsername.value);
+    // console.log(profileImageFile.files.length);
+    if (profileImageFile.files.length == 0) {
+        alert("please select image")
     }
-    catch (error) {
-        console.log(error);
+    else {
+        try {
+            let photoUrl = await profileImageFunction(profileImageFile.files[0]);
+            const UserImageRef = doc(db, "userData", auth.currentUser.uid);
+            await updateDoc(UserImageRef, {
+                photoUrl
+            });
+            alert("profile updated")
+            console.log(photoUrl);
+            console.log(profileEmail.value, profileUsername.value);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 })
