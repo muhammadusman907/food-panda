@@ -2,11 +2,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 // ==============================================================================
 // ========================================= authentication ===================== 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword ,onAuthStateChanged ,signOut  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 // ==============================================================================
 // =================================== fire store =============================== 
-import { getFirestore, collection, addDoc , doc, onSnapshot} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+import { getFirestore, collection, addDoc, doc, onSnapshot, setDoc, getDoc , updateDoc  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+// ================================  STORAGE
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 const firebaseConfig = {
     apiKey: "AIzaSyCNLLVAJDsvgEujEbHWjHTykGL5O-HDPQE",
     authDomain: "hackathon-batch-10.firebaseapp.com",
@@ -22,7 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app)
 const auth = getAuth(app);
 const db = getFirestore(app);
-
-export { auth, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged ,signOut ,
-     db, getFirestore, collection, addDoc ,doc, onSnapshot
-    }
+const storage = getStorage(app);
+export {
+    auth, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut,
+    db, getFirestore, collection, addDoc, doc, onSnapshot, setDoc, getDoc, updateDoc ,
+    getStorage, storage, ref, uploadBytesResumable, getDownloadURL
+}
